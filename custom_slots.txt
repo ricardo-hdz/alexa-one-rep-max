@@ -1,0 +1,57 @@
+SCHEMA
+{
+  "intents": [
+    {
+      "intent": "calculate",
+      "slots": [
+        {
+          "name": "weight",
+          "type": "NUMBER"
+        },
+        {
+          "name": "reps",
+          "type": "REPS_RANGE"
+        },
+        {
+          "name": "unit",
+          "type": "VALID_UNITS"
+        }
+      ]
+    }
+  ]
+}
+
+REPS_RANGE
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+VALID_UNITS
+kilos
+kilo
+kilograms
+kilogram
+pounds
+pound
+
+SAMPLE_UTTERANCES
+calculate   rep max {weight} {unit} {reps} reps
+calculate   max {weight} {unit} {reps} reps
+calculate   rep max of {weight} {unit} {reps} reps
+calculate   max of {weight} {unit} {reps} reps
+calculate   rep max {weight} {unit} {reps}
+calculate   max {weight} {unit} {reps}
+calculate   rep max of {weight} {unit} {reps}
+calculate   max of {weight} {unit} {reps}
+calculate   rep max {weight} {reps}
+calculate   max {weight} {reps}
+calculate   rep max of {weight} {reps}
+calculate   max of {weight} {reps}
+calculate   {weight} {reps}

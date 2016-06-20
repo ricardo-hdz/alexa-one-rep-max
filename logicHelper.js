@@ -4,6 +4,9 @@ var _ = require('lodash');
 
 function logicHelper() {
     var calculateRepMax = function(weight_lifted, reps) {
+        weight_lifted = _.toNumber(weight_lifted);
+        reps = _.toNumber(reps);
+
         if (!_.isNumber(weight_lifted) || !_.isNumber(reps)) {
             return {
                 isCorrect: false,

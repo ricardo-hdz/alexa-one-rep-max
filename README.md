@@ -17,10 +17,7 @@ Start challenging yourself!
  ```
 
 ### Category
-Food & Drink
-
-### Sub-Category
-Wine & Beverages
+Health & Fitness
 
 ### Keywords
-beer, craft, pairings, food, guide
+fitness, gym, gyms, tracker, weightlifting, weight-lifting, calculator, one rep max, rep max, routines, routine, gym routines, lean, dumbbells, barbell

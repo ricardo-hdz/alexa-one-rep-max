@@ -15,12 +15,14 @@ app.intent('calculate',
     {
         'slots': {
             'weight': 'AMAZON.NUMBER',
-            'reps': 'REPS_RANGE'
+            'reps': 'REPS_RANGE',
+            'unit': 'VALID_UNITS'
         },
         'utterances': [
-            '{|rep} max {|of} {-|weight} pounds {|-reps} reps',
-            '{|rep} max {|of} {-|weight} {|-reps}',
-            '{-|weight} {|-reps}'
+            '{rep max|max} {|of} {-|weight} {-|unit} {-|reps} reps',
+            '{rep max|max} {|of} {-|weight} {-|unit} {-|reps}',
+            '{rep max|max} {|of} {-|weight} {-|reps}',
+            '{-|weight} {-|reps}'
         ]
     },
     function(req, res) {
@@ -37,3 +39,5 @@ app.intent('calculate',
         }
     }
 );
+
+module.exports = app;

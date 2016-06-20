@@ -1,0 +1,35 @@
+{
+  "name": "alexa-one-rep-max",
+  "version": "1.0.0",
+  "description": "An Amazon Alexa app to calculate your one repetition max weight to use when lifting at the gym.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ricardo-hdz/alexa-one-rep-max.git"
+  },
+  "keywords": [
+    "gym",
+    "one",
+    "rep",
+    "max",
+    "one",
+    "repetition",
+    "max",
+    "fitness"
+  ],
+  "author": "Ricardo Hdz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ricardo-hdz/alexa-one-rep-max/issues"
+  },
+  "homepage": "https://github.com/ricardo-hdz/alexa-one-rep-max",
+  "dependencies": {
+    "alexa-app": "^2.3.4",
+    "chai": "^3.5.0",
+    "lodash": "^4.13.1",
+    "mocha": "^2.5.3"
+  }
+}

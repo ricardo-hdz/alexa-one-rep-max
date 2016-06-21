@@ -1,3 +1,4 @@
+/* global require */
 'use strict';
 
 var _ = require('lodash');
@@ -5,11 +6,32 @@ var alexa = require('alexa-app');
 var app = new alexa.app('one-rep-max');
 var helper = require('./logicHelper')();
 
-app.launch(function(req, res) {
+var defaultIntentHandler = function(req, res) {
     var prompt = 'To calculate your one rep max, tell me the weight and number of reps performed. ' +
         'To correct calculate it, number of reps should be less or equal to ten.';
     res.say(prompt).reprompt(prompt).shouldEndSession(false);
+};
+
+var defaultExitHandler = function(req, res) {
+    res.say('Good bye! Beat your max!').shouldEndSession(false);
+};
+
+app.launch(defaultIntentHandler);
+
+app.intent('AMAZON.StartOverIntent', defaultIntentHandler);
+app.intent('AMAZON.RepeatIntent', defaultIntentHandler);
+
+app.intent('AMAZON.HelpIntent', function(req, res) {
+    var prompt = 'I can help you to find your one rep max.<break strength="strong"/>' +
+        'For example, you can ask me:<break strength="medium"/>calculate rep max of hundred pounds ten reps.' +
+        '<break strength="strong"/>What is the weight and number of reps you want me to calculate?';
+    var reprompt = 'Please tell me the weight and number of reps you want me to calculate for your one rep max.';
+    res.say(prompt).reprompt(reprompt).shouldEndSession(false);
 });
+
+app.intent('AMAZON.StopIntent', defaultExitHandler);
+app.intent('AMAZON.CancelIntent', defaultExitHandler);
+
 
 app.intent('calculate',
     {

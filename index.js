@@ -13,7 +13,7 @@ var defaultIntentHandler = function(req, res) {
 };
 
 var defaultExitHandler = function(req, res) {
-    res.say('Good bye! Beat your max!').shouldEndSession(false);
+    res.say('Good bye! Beat your max!').shouldEndSession(true);
 };
 
 app.launch(defaultIntentHandler);
@@ -23,7 +23,7 @@ app.intent('AMAZON.RepeatIntent', defaultIntentHandler);
 
 app.intent('AMAZON.HelpIntent', function(req, res) {
     var prompt = 'I can help you to find your one rep max.<break strength="strong"/>' +
-        'For example, you can ask me:<break strength="medium"/>calculate rep max of hundred pounds ten reps.' +
+        'For example, you can ask me:<break strength="medium"/>rep max of hundred pounds ten reps.' +
         '<break strength="strong"/>What is the weight and number of reps you want me to calculate?';
     var reprompt = 'Please tell me the weight and number of reps you want me to calculate for your one rep max.';
     res.say(prompt).reprompt(reprompt).shouldEndSession(false);

@@ -41,10 +41,12 @@ app.intent('calculate',
             'unit': 'VALID_UNITS'
         },
         'utterances': [
-            '{rep max|max} {|of} {-|weight} {-|unit} {-|reps} reps',
-            '{rep max|max} {|of} {-|weight} {-|unit} {-|reps}',
-            '{rep max|max} {|of} {-|weight} {-|reps}',
-            '{-|weight} {-|reps}'
+            '{|calculate} {-|weight} {-|unit} {-|reps} reps',
+            '{|calculate} {-|weight} {-|unit} {-|reps}',
+            '{|calculate} {-|weight} {-|reps}',
+            'get {|my} rep max of {-|weight} {-|unit} {-|reps} reps',
+            'get {|my} rep max of {-|weight} {-|unit} {-|reps}',
+            'get {|my} rep max of {-|weight} {-|reps}'
         ]
     },
     function(req, res) {

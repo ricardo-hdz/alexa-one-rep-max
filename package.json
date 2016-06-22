@@ -28,6 +28,7 @@
   "homepage": "https://github.com/ricardo-hdz/alexa-one-rep-max",
   "dependencies": {
     "alexa-app": "^2.3.4",
+    "alexa-app-server": "^2.2.4",
     "chai": "^3.5.0",
     "lodash": "^4.13.1",
     "mocha": "^2.5.3"

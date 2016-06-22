@@ -42,16 +42,15 @@ pounds
 pound
 
 SAMPLE_UTTERANCES
-calculate   rep max {weight} {unit} {reps} reps
-calculate   max {weight} {unit} {reps} reps
-calculate   rep max of {weight} {unit} {reps} reps
-calculate   max of {weight} {unit} {reps} reps
-calculate   rep max {weight} {unit} {reps}
-calculate   max {weight} {unit} {reps}
-calculate   rep max of {weight} {unit} {reps}
-calculate   max of {weight} {unit} {reps}
-calculate   rep max {weight} {reps}
-calculate   max {weight} {reps}
-calculate   rep max of {weight} {reps}
-calculate   max of {weight} {reps}
-calculate   {weight} {reps}
+calculate {weight} {unit} {reps} reps
+calculate calculate {weight} {unit} {reps} reps
+calculate {weight} {unit} {reps}
+calculate calculate {weight} {unit} {reps}
+calculate {weight} {reps}
+calculate calculate {weight} {reps}
+calculate get rep max of {weight} {unit} {reps} reps
+calculate get my rep max of {weight} {unit} {reps} reps
+calculate get rep max of {weight} {unit} {reps}
+calculate get my rep max of {weight} {unit} {reps}
+calculate get rep max of {weight} {reps}
+calculate get my rep max of {weight} {reps}

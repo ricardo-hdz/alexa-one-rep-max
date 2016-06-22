@@ -43,10 +43,8 @@ app.intent('calculate',
         'utterances': [
             '{|calculate} {-|weight} {-|unit} {-|reps} reps',
             '{|calculate} {-|weight} {-|unit} {-|reps}',
-            '{|calculate} {-|weight} {-|reps}',
             'get {|my} rep max of {-|weight} {-|unit} {-|reps} reps',
-            'get {|my} rep max of {-|weight} {-|unit} {-|reps}',
-            'get {|my} rep max of {-|weight} {-|reps}'
+            'get {|my} rep max of {-|weight} {-|unit} {-|reps}'
         ]
     },
     function(req, res) {

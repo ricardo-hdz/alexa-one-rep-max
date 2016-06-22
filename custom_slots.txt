@@ -46,11 +46,7 @@ calculate {weight} {unit} {reps} reps
 calculate calculate {weight} {unit} {reps} reps
 calculate {weight} {unit} {reps}
 calculate calculate {weight} {unit} {reps}
-calculate {weight} {reps}
-calculate calculate {weight} {reps}
 calculate get rep max of {weight} {unit} {reps} reps
 calculate get my rep max of {weight} {unit} {reps} reps
 calculate get rep max of {weight} {unit} {reps}
 calculate get my rep max of {weight} {unit} {reps}
-calculate get rep max of {weight} {reps}
-calculate get my rep max of {weight} {reps}

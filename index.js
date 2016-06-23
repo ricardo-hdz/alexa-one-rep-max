@@ -23,7 +23,7 @@ app.intent('AMAZON.RepeatIntent', defaultIntentHandler);
 
 app.intent('AMAZON.HelpIntent', function(req, res) {
     var prompt = 'I can help you to find your one rep max.<break strength="strong"/>' +
-        'For example, you can ask me:<break strength="medium"/>rep max of hundred pounds ten reps.' +
+        'For example, you can tell me:<break strength="medium"/>calculate hundred pounds ten reps.' +
         '<break strength="strong"/>What is the weight and number of reps you want me to calculate?';
     var reprompt = 'Please tell me the weight and number of reps you want me to calculate for your one rep max.';
     res.say(prompt).reprompt(reprompt).shouldEndSession(false);
@@ -41,8 +41,8 @@ app.intent('calculate',
             'unit': 'VALID_UNITS'
         },
         'utterances': [
-            '{|calculate} {-|weight} {-|unit} {-|reps} reps',
-            '{|calculate} {-|weight} {-|unit} {-|reps}',
+            '{calculate} {-|weight} {-|unit} {-|reps} reps',
+            '{calculate} {-|weight} {-|unit} {-|reps}',
             'get {|my} rep max of {-|weight} {-|unit} {-|reps} reps',
             'get {|my} rep max of {-|weight} {-|unit} {-|reps}'
         ]

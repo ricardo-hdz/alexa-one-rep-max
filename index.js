@@ -41,8 +41,8 @@ app.intent('calculate',
             'unit': 'VALID_UNITS'
         },
         'utterances': [
-            '{calculate} {-|weight} {-|unit} {-|reps} reps',
-            '{calculate} {-|weight} {-|unit} {-|reps}',
+            '{|determine|figure} rep max of {-|weight} {-|unit} {-|reps} reps',
+            '{|determine|figure} rep max of {-|weight} {-|unit} {-|reps}',
             'get {|my} rep max of {-|weight} {-|unit} {-|reps} reps',
             'get {|my} rep max of {-|weight} {-|unit} {-|reps}'
         ]

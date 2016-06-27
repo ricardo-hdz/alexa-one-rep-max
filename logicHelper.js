@@ -3,47 +3,113 @@
 var _ = require('lodash');
 
 function logicHelper() {
-    var calculateRepMax = function(weight_lifted, reps) {
+
+    var errorMessages = {
+        notANumber: 'I\'m sorry, I can just determine your rep max using valid numbers for weights and repetitions. ' +
+                    'Please tell me what is the weight you lifted and the number of reps performed.',
+
+        noValuesProvided: 'I\'m sorry, to determine your one rep max I need the weight you lifted and the number of reps. ' +
+                    'Please tell me what is the weight you lifted and the number of reps performed.',
+
+        weightGreaterThanZero: 'I\'m sorry, to correctly determine your rep max the weight lifted should be ' +
+            'a number great than zero.',
+
+        weightNaN: 'I\'m sorry, I can just determine your rep max using valid weights. ' +
+            'Please tell me the correct weight you lifted along with the number of reps performed.',
+
+        weightMissing: 'I\'m sorry, to correctly determine your rep max I need the weight you lifted. ' +
+            'Please tell me the correct number of reps you lifted along with the number of reps performed.',
+
+        repsNaN: 'I\'m sorry, I can just determine your rep max using a valid repetition range from from one to ten. ' +
+            'Please tell me the correct number of reps you lifted along with the number of reps performed.',
+
+        repsGreaterThanZero: 'I\'m sorry, to correctly determine your rep max the number of reps should be ' +
+            'a number great than zero.',
+
+        repsGreaterThanTen: 'I\'m sorry, to correctly determine your rep max the number of reps should be ' +
+            'less or equal to ten.',
+
+        repsMissing: 'I\'m sorry, to correctly determine your rep max I need the number of reps you performed. ' +
+            'Please tell me the correct number of reps you lifted along with the number of reps performed.',
+
+        weightRepsGreaterThanZero: 'I\'m sorry, to correctly determine your rep max the weight and number of reps should be ' +
+            'great than zero.'
+    };
+
+    var determineRepMax = function(weight_lifted, reps) {
+        if ((_.isNull(weight_lifted) || _.isUndefined(weight_lifted)) && (_.isNull(reps) || _.isUndefined(reps))) {
+            return {
+                isCorrect: false,
+                prompt: errorMessages.noValuesProvided
+            };
+        }
+
+        if (_.isNull(weight_lifted) || _.isUndefined(weight_lifted)) {
+            return {
+                isCorrect: false,
+                prompt: errorMessages.weightMissing
+            };
+        }
+
+        if (_.isNull(reps) || _.isUndefined(reps)) {
+            return {
+                isCorrect: false,
+                prompt: errorMessages.repsMissing
+            };
+        }
+
         weight_lifted = _.toNumber(weight_lifted);
         reps = _.toNumber(reps);
 
-        if (!_.isNumber(weight_lifted) || !_.isNumber(reps)) {
+        console.log('Weight: ' + weight_lifted);
+        console.log('Reps: ' + reps);
+
+        if ((!_.isNumber(weight_lifted) || _.isNaN(weight_lifted)) && (!_.isNumber(reps) || _.isNaN(reps))) {
             return {
                 isCorrect: false,
-                prompt: 'I\'m sorry, I can just calculate your rep max using numbers. ' +
-                    'Please tell me what is the weight you lifted and the number of reps performed.'
+                prompt: errorMessages.notANumber
             };
         }
 
-        if ((weight_lifted === 0 && reps === 0) || (weight_lifted < 0 && reps < 0)) {
+        if (weight_lifted <= 0 && reps <= 0) {
             return {
                 isCorrect: false,
-                prompt: 'I\'m sorry, to correctly calculate your rep max the weight and number of reps should be ' +
-                    'great than zero.'
+                prompt: errorMessages.weightRepsGreaterThanZero
             };
         }
 
-        if (reps > 10) {
+        if (!_.isNumber(weight_lifted) || _.isNaN(weight_lifted)) {
             return {
                 isCorrect: false,
-                prompt: 'I\'m sorry, to correctly calculate your rep max the number of reps should be ' +
-                    'less or equal to ten.'
-            };
-        }
-
-        if (reps <= 0) {
-            return {
-                isCorrect: false,
-                prompt: 'I\'m sorry, to correctly calculate your rep max the number of reps should be ' +
-                    'great than zero.'
+                prompt: errorMessages.weightNaN
             };
         }
 
         if (weight_lifted <= 0) {
             return {
                 isCorrect: false,
-                prompt: 'I\'m sorry, to correctly calculate your rep max the weight lifted should be ' +
-                    'great than zero.'
+                prompt: errorMessages.weightZeroOrNegative
+            };
+        }
+
+        if (!_.isNumber(reps) || _.isNaN(reps)) {
+            return {
+                isCorrect: false,
+                prompt: errorMessages.repsNaN
+            };
+        }
+
+        if (reps <= 0) {
+            return {
+                isCorrect: false,
+                prompt: errorMessages.repsGreaterThanZero
+            };
+        }
+
+        if (reps > 10) {
+            return {
+                isCorrect: false,
+                prompt: errorMessages.repsGreaterThanTen
             };
         }
 
@@ -76,8 +142,9 @@ function logicHelper() {
     };
 
     return {
-        calculateRepMax: calculateRepMax,
-        getMaxRange: getMaxRange
+        determineRepMax: determineRepMax,
+        getMaxRange: getMaxRange,
+        errorMessages: errorMessages
     };
 }
 

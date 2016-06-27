@@ -39,105 +39,127 @@ describe('One Rep Max', function() {
             var weight_lifted = 65;
             var reps = 5;
 
-            var result = logicHelper.calculateRepMax(weight_lifted, reps);
+            var result = logicHelper.determineRepMax(weight_lifted, reps);
             expect(result.isCorrect).to.be.true;
             expect(result.prompt).to.equal('Your rep max is 73');
         });
     });
 
-    describe('Should return correct error messages ', function() {
-        var notNumberMessage = 'I\'m sorry, I can just calculate your rep max using numbers. ' +
-                    'Please tell me what is the weight you lifted and the number of reps performed.';
+    describe('Weight error cases ', function() {
+        // Null > 0
 
-
-        it('when no weight is defined', function() {
-            var result = logicHelper.calculateRepMax(null,100);
+        it('when weight is null or undefined', function() {
+            var result = logicHelper.determineRepMax(null,100);
             expect(result.isCorrect).to.be.false;
-            expect(result.prompt).to.equal(notNumberMessage);
+            expect(result.prompt).to.equal(logicHelper.errorMessages.weightMissing);
+
+            result = logicHelper.determineRepMax(undefined,100);
+            expect(result.isCorrect).to.be.false;
+            expect(result.prompt).to.equal(logicHelper.errorMessages.weightMissing);
         });
 
-        it('Should return null when no reps are defined', function() {
-            var result = logicHelper.calculateRepMax(100);
+        //NaN
+        it('when weight is not a number', function() {
+            var result = logicHelper.determineRepMax(NaN, 9);
             expect(result.isCorrect).to.be.false;
-            expect(result.prompt).to.equal(notNumberMessage);
+            expect(result.prompt).to.equal(logicHelper.errorMessages.weightNaN);
         });
 
-        it('Should return null when weight and reps are undefined', function() {
-            var result = logicHelper.calculateRepMax();
+        it('when weight is a string', function() {
+            var result = logicHelper.determineRepMax('Random text', 9);
             expect(result.isCorrect).to.be.false;
-            expect(result.prompt).to.equal(notNumberMessage);
+            expect(result.prompt).to.equal(logicHelper.errorMessages.weightNaN);
         });
 
-        it('Should return null when weight is not a number', function() {
-            var result = logicHelper.calculateRepMax('100');
-            expect(result.isCorrect).to.be.false;
-            expect(result.prompt).to.equal(notNumberMessage);
-        });
-
-        it('Should return null when reps is not a number', function() {
-            var result = logicHelper.calculateRepMax(100, '100');
-            expect(result.isCorrect).to.be.false;
-            expect(result.prompt).to.equal(notNumberMessage);
-        });
-
-        it('Should return null when weight and reps are not a number', function() {
-            var result = logicHelper.calculateRepMax('100', '100');
-            expect(result.isCorrect).to.be.false;
-            expect(result.prompt).to.equal(notNumberMessage);
-        });
-
-        it('Should return null when reps exceed 10', function() {
-            var prompt = 'I\'m sorry, to correctly calculate your rep max the number of reps should be ' +
-                    'less or equal to ten.';
-
-            var result = logicHelper.calculateRepMax(100, 11);
-            expect(result.isCorrect).to.be.false;
-            expect(result.prompt).to.equal(prompt);
-
-            var result = logicHelper.calculateRepMax(100, 10.1);
-            expect(result.isCorrect).to.be.false;
-            expect(result.prompt).to.equal(prompt);
-        });
-
-        it('Should return null when reps is zero or negative', function() {
-            var prompt = 'I\'m sorry, to correctly calculate your rep max the number of reps should be ' +
-                    'great than zero.';
-
-            var result = logicHelper.calculateRepMax(100, 0);
-            expect(result.isCorrect).to.be.false;
-            expect(result.prompt).to.equal(prompt);
-
-            var result = logicHelper.calculateRepMax(100, -1);
-            expect(result.isCorrect).to.be.false;
-            expect(result.prompt).to.equal(prompt);
-        });
-
+        // Weight < 0
         it('Should return null when weight is zero or negative', function() {
-            var prompt = 'I\'m sorry, to correctly calculate your rep max the weight lifted should be ' +
-                    'great than zero.';
-
-            var result = logicHelper.calculateRepMax(0, 9);
+            var result = logicHelper.determineRepMax(0, 9);
             expect(result.isCorrect).to.be.false;
-            expect(result.prompt).to.equal(prompt);
+            expect(result.prompt).to.equal(logicHelper.errorMessages.weightZeroOrNegative);
 
-            var result = logicHelper.calculateRepMax(-10, 9);
+            var result = logicHelper.determineRepMax(-10, 9);
             expect(result.isCorrect).to.be.false;
-            expect(result.prompt).to.equal(prompt);
-        });
-
-
-        it('Should return null when weight and reps are zero or negative', function() {
-            var prompt = 'I\'m sorry, to correctly calculate your rep max the weight and number of reps should be ' +
-                    'great than zero.';
-            var result = logicHelper.calculateRepMax(0, 0);
-            expect(result.isCorrect).to.be.false;
-            expect(result.prompt).to.equal(prompt);
-
-            var result = logicHelper.calculateRepMax(-1, -1);
-            expect(result.isCorrect).to.be.false;
-            expect(result.prompt).to.equal(prompt);
+            expect(result.prompt).to.equal(logicHelper.errorMessages.weightZeroOrNegative);
         });
     });
 
+    describe('Rep error cases ', function() {
+        // Null > 0
+        it('when reps is null or undefined', function() {
+            var result = logicHelper.determineRepMax(100, null);
+            expect(result.isCorrect).to.be.false;
+            expect(result.prompt).to.equal(logicHelper.errorMessages.repsMissing);
 
+            result = logicHelper.determineRepMax(100, undefined);
+            expect(result.isCorrect).to.be.false;
+            expect(result.prompt).to.equal(logicHelper.errorMessages.repsMissing);
+        });
+
+        // NaN
+        it('when reps is not a number', function() {
+            var result = logicHelper.determineRepMax(100, NaN);
+            expect(result.isCorrect).to.be.false;
+            expect(result.prompt).to.equal(logicHelper.errorMessages.repsNaN);
+        });
+
+         it('when reps is string', function() {
+            var result = logicHelper.determineRepMax(100, 'Random text');
+            expect(result.isCorrect).to.be.false;
+            expect(result.prompt).to.equal(logicHelper.errorMessages.repsNaN);
+        });
+
+        // No reps
+        it('when no reps are defined', function() {
+            var result = logicHelper.determineRepMax(100);
+            expect(result.isCorrect).to.be.false;
+            expect(result.prompt).to.equal(logicHelper.errorMessages.repsMissing);
+        });
+
+        it('Should return null when reps is zero or negative', function() {
+            var prompt = 'I\'m sorry, to correctly determine your rep max the number of reps should be ' +
+                    'great than zero.';
+
+            var result = logicHelper.determineRepMax(100, 0);
+            expect(result.isCorrect).to.be.false;
+            expect(result.prompt).to.equal(logicHelper.errorMessages.repsGreaterThanZero);
+
+            var result = logicHelper.determineRepMax(100, -1);
+            expect(result.isCorrect).to.be.false;
+            expect(result.prompt).to.equal(logicHelper.errorMessages.repsGreaterThanZero);
+        });
+
+        it('Should return null when reps exceed 10', function() {
+            var result = logicHelper.determineRepMax(100, 11);
+            expect(result.isCorrect).to.be.false;
+            expect(result.prompt).to.equal(logicHelper.errorMessages.repsGreaterThanTen);
+
+            var result = logicHelper.determineRepMax(100, 10.1);
+            expect(result.isCorrect).to.be.false;
+            expect(result.prompt).to.equal(logicHelper.errorMessages.repsGreaterThanTen);
+        });
+    });
+
+    describe('Weight/Reps error cases ', function() {
+        it('Should return null when weight and reps are undefined', function() {
+            var result = logicHelper.determineRepMax();
+            expect(result.isCorrect).to.be.false;
+            expect(result.prompt).to.equal(logicHelper.errorMessages.noValuesProvided);
+        });
+
+        it('Should return null when weight and reps are not a number', function() {
+            var result = logicHelper.determineRepMax('Random', 'Random');
+            expect(result.isCorrect).to.be.false;
+            expect(result.prompt).to.equal(logicHelper.errorMessages.notANumber);
+        });
+
+        it('Should return null when weight and reps are zero or negative', function() {
+            var result = logicHelper.determineRepMax(0, 0);
+            expect(result.isCorrect).to.be.false;
+            expect(result.prompt).to.equal(logicHelper.errorMessages.weightRepsGreaterThanZero);
+
+            var result = logicHelper.determineRepMax(-1, -1);
+            expect(result.isCorrect).to.be.false;
+            expect(result.prompt).to.equal(logicHelper.errorMessages.weightRepsGreaterThanZero);
+        });
+    });
 });

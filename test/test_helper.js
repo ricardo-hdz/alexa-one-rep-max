@@ -76,11 +76,11 @@ describe('One Rep Max', function() {
         it('Should return null when weight is zero or negative', function() {
             var result = logicHelper.determineRepMax(0, 9);
             expect(result.isCorrect).to.be.false;
-            expect(result.prompt).to.equal(errorMessages.weightZeroOrNegative);
+            expect(result.prompt).to.equal(errorMessages.weightGreaterThanZero);
 
             var result = logicHelper.determineRepMax(-10, 9);
             expect(result.isCorrect).to.be.false;
-            expect(result.prompt).to.equal(errorMessages.weightZeroOrNegative);
+            expect(result.prompt).to.equal(errorMessages.weightGreaterThanZero);
         });
     });
 

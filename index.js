@@ -7,9 +7,10 @@ var app = new alexa.app('one-rep-max');
 var helper = require('./logicHelper')();
 var defaultPrompt = 'To determine your one rep max, tell me the weight and number of reps performed. ' +
         'To do correctly determine it, the number of reps should be less or equal to ten.';
+var repromptMessage = 'Please tell me the weight and number of reps you performed.';
 
 var defaultIntentHandler = function(req, res) {
-    res.say(defaultPrompt).reprompt(prompt).shouldEndSession(false);
+    res.say(defaultPrompt).reprompt(repromptMessage).shouldEndSession(false);
 };
 
 var defaultExitHandler = function(req, res) {
@@ -25,8 +26,7 @@ app.intent('AMAZON.HelpIntent', function(req, res) {
     var prompt = 'I can help you to find your one rep max.<break strength="strong"/>' +
         'For example, you can tell me:<break strength="medium"/> get rep max of hundred pounds ten reps.' +
         '<break strength="strong"/>What is the weight and number of reps you want me to get your rep max of?';
-    var reprompt = 'Please tell me the weight and number of reps you want me to get your one rep max of.';
-    res.say(prompt).reprompt(reprompt).shouldEndSession(false);
+    res.say(prompt).reprompt(repromptMessage).shouldEndSession(false);
 });
 
 app.intent('AMAZON.StopIntent', defaultExitHandler);
@@ -49,19 +49,19 @@ app.intent('determine',
     function(req, res) {
         console.log('Intent: ' + req.data.request.intent.name);
         var intent = _.get(req, 'data.request.intent.name');
-        var reprompt = 'Please tell me the weight and number of reps you performed.';
+
         var weight_lifted = req.slot('weight');
         var reps = req.slot('reps');
         var unit = req.slot('unit');
 
         if (_.isEmpty(intent)) {
-            res.say(defaultPrompt).reprompt(reprompt).shouldEndSession(false);
+            res.say(defaultPrompt).reprompt(repromptMessage).shouldEndSession(false);
             return true;
         }
 
         if (intent !== 'determine') {
             var promptIntentNotSupported = 'I\'m sorry, I currently do not know what to do with ' + intent + '. What else can I help with?';
-            res.say(promptIntentNotSupported).reprompt(reprompt).shouldEndSession(false);
+            res.say(promptIntentNotSupported).reprompt(repromptMessage).shouldEndSession(false);
             return true;
         }
 
@@ -69,7 +69,7 @@ app.intent('determine',
             var promptEmpty = 'I\'m sorry, in order to determine your one rep max I need to know the weight ' +
                 'you lifted in pounds or kilos and the number of reps your performed. ' +
                 'Please tell me what is the weight you lifted and the number of reps performed.';
-            res.say(promptEmpty).reprompt(reprompt).shouldEndSession(false);
+            res.say(promptEmpty).reprompt(repromptMessage).shouldEndSession(false);
             return true;
         } else {
             var result = helper.determineRepMax(weight_lifted, reps);
@@ -80,7 +80,7 @@ app.intent('determine',
             if (result.isCorrect) {
                 res.say(result.prompt + ' ' + unit).send();
             } else {
-                res.say(result.prompt).reprompt(reprompt).shouldEndSession(false).send();
+                res.say(result.prompt).reprompt(repromptMessage).shouldEndSession(false).send();
             }
             return false;
         }

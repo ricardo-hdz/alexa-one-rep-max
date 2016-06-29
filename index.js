@@ -9,6 +9,17 @@ var defaultPrompt = 'To determine your one rep max, tell me the weight and numbe
         'To do correctly determine it, the number of reps should be less or equal to ten.';
 var repromptMessage = 'Please tell me the weight and number of reps you performed.';
 
+var VALID_UNITS = [
+    'kilos',
+    'kilo',
+    'kilograms',
+    'kilogram',
+    'pounds',
+    'pound',
+    'lb',
+    'lbs'
+];
+
 var defaultIntentHandler = function(req, res) {
     res.say(defaultPrompt).reprompt(repromptMessage).shouldEndSession(false);
 };
@@ -48,8 +59,8 @@ app.intent('determine',
     },
     function(req, res) {
         console.log('Intent: ' + req.data.request.intent.name);
+        var promptEmpty;
         var intent = _.get(req, 'data.request.intent.name');
-
         var weight_lifted = req.slot('weight');
         var reps = req.slot('reps');
         var unit = req.slot('unit');
@@ -65,10 +76,21 @@ app.intent('determine',
             return true;
         }
 
-        if (_.isEmpty(weight_lifted) || _.isEmpty(unit) || _.isEmpty(reps)) {
-            var promptEmpty = 'I\'m sorry, in order to determine your one rep max I need to know the weight ' +
+        if (_.isEmpty(weight_lifted) || _.isEmpty(reps)) {
+            promptEmpty = 'I\'m sorry, in order to determine your one rep max I need to know the weight ' +
                 'you lifted in pounds or kilos and the number of reps your performed. ' +
                 'Please tell me what is the weight you lifted and the number of reps performed.';
+            res.say(promptEmpty).reprompt(repromptMessage).shouldEndSession(false);
+            return true;
+        } else if (_.isEmpty(unit)) {
+            promptEmpty = 'I\'m sorry, in order to determine your one rep max I need to know the valid measure unit ' +
+                'of the weight you lifted in pounds or kilos and the number of reps your performed. ' +
+                'Please tell me what is the weight you lifted and the number of reps performed.';
+            res.say(promptEmpty).reprompt(repromptMessage).shouldEndSession(false);
+            return true;
+        } else if (_.indexOf(VALID_UNITS, unit) === -1) {
+            promptEmpty = 'I\'m sorry, I do not recognize the unit of measure ' + unit + '. ' +
+                'Please tell me what is the weight you lifted in pounds or kilos and the number of reps performed.';
             res.say(promptEmpty).reprompt(repromptMessage).shouldEndSession(false);
             return true;
         } else {

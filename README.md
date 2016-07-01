@@ -11,8 +11,8 @@ Start challenging yourself!
 ### Example
 ```
 "Alexa, open one rep max"
-"Alexa, ask one rep max to determine rep max of hundred pounds ten reps"
-"Alexa, tell one rep max to figure rep max of hundred pounds ten reps"
+"Alexa, ask one rep max to determine rep max of one hundred pounds ten reps"
+"Alexa, tell one rep max to figure rep max of one hundred pounds ten reps"
 "Alexa, tell one rep max get my rep max of fifty pounds seven reps"
 "Alexa, ask one rep max get rep max of forty five pounds three"
  ```
